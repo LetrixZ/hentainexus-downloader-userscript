@@ -1,5 +1,5 @@
 {
-  "name": "hentainexus-downloader",
+  "name": "hentainexus-downloader-userscript",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,13 +9,12 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "vite": "^5.0.11",
-    "vite-plugin-monkey": "^3.5.1",
-    "vite-plugin-node-polyfills": "^0.19.0"
+    "vite-plugin-monkey": "^3.5.1"
   },
   "dependencies": {
-    "streamsaver": "^2.0.6",
-    "zip-stream": "^5.0.1"
+    "@zip.js/zip.js": "^2.7.33",
+    "p-limit": "^5.0.0",
+    "streamsaver": "^2.0.6"
   }
 }
