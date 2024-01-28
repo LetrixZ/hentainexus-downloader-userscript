@@ -1,5 +1,5 @@
 import { getData } from "./data";
-import { startDownload } from "./download";
+import { setDownloaded, startDownload } from "./download";
 import { downloadIcon, spinnerIcon } from "./icons";
 
 const setDownloadButtonState = (state) => {
@@ -28,12 +28,18 @@ export const addButtons = () => {
   downloadButton.querySelector(".icon").innerHTML = downloadIcon;
   downloadButton.setAttribute("state", "ready");
   downloadButton.querySelector("a").removeAttribute("href");
-  downloadButton.addEventListener("click", (ev) => {
+  downloadButton.addEventListener("click", async (ev) => {
     ev.preventDefault();
 
-    setDownloadButtonState("downloading");
-    const metadata = getData(document);
-    startDownload(metadata, setDownloadButtonState, setProgress);
+    try {
+      setDownloadButtonState("downloading");
+      const metadata = getData(document);
+      await startDownload(metadata, setDownloadButtonState, setProgress);
+      setDownloaded(metadata.id);
+    } catch (e) {
+      alert("Download failed. Try again.");
+      throw e;
+    }
   });
 
   document.querySelector(".level-left").insertBefore(downloadButton, document.querySelector(".level-left > .level-item:nth-of-type(2)"));

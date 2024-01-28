@@ -163,3 +163,13 @@ export const startDownload = async (metadata, setState, setProgress) => {
     setState("ready");
   }
 };
+
+export const getDownloaded = () => {
+  return JSON.parse(localStorage.getItem("downloads") || "[]");
+};
+
+export const setDownloaded = (id) => {
+  const downloads = JSON.parse(localStorage.getItem("downloads") || "[]");
+  downloads.push(id);
+  localStorage.setItem("downloads", JSON.stringify(downloads));
+};
