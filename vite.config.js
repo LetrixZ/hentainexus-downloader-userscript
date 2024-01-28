@@ -7,7 +7,7 @@ export default defineConfig({
     monkey({
       entry: "src/main.js",
       userscript: {
-        match: ["https://hentainexus.com/view/*"],
+        match: ["https://hentainexus.com/*"],
         description: "Allows users to download a gallery from HentaiNexus with it's metadata",
       },
     }),
