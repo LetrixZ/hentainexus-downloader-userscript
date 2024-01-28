@@ -18,7 +18,7 @@ const generateFilename = ({ title, artists, magazines }) => {
 
   splits.push(title);
 
-  if (magazines.length === 1) {
+  if (magazines?.length === 1) {
     splits.push(`(${magazines[0]})`);
   }
 
@@ -98,7 +98,12 @@ const getImages = async (id) => {
     .find((script) => script.innerHTML.includes("initReader"))
     .innerHTML.match(/(?<=initReader\(").*?(?=")/g);
 
-  return JSON.parse(decryptData(data));
+  const images = JSON.parse(decryptData(data));
+
+  console.log(`Got ${images.length} images`);
+  console.log(images);
+
+  return images.filter((image) => image.type === "image");
 };
 
 const fetchImage = async (image, writer) => {

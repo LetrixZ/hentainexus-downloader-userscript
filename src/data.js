@@ -16,6 +16,7 @@ const getArrayText = (name, document) => {
 export const getData = (document) => {
   const id = +document.querySelector("a[href^='/read/']").getAttribute("href").split("/").at(-1);
   const title = document.querySelector("h1.title").textContent;
+  const description = getInfoElement("Description", document)?.querySelector("td:last-of-type")?.textContent?.trim();
 
   const artists = getArrayText("Artist", document);
   const magazines = getArrayText("Magazine", document);
@@ -26,9 +27,10 @@ export const getData = (document) => {
   const favorites = +getInfoElement("Favorites", document).querySelector("td:last-of-type").textContent.trim();
   const tags = Array.from(getInfoElement("Tags", document).querySelectorAll(".tag")).map((tag) => tag.textContent.trim().split("(")[0].trim());
 
-  return {
+  const metadata = {
     id,
     title,
+    description,
     artists,
     magazines,
     parodies,
@@ -37,4 +39,9 @@ export const getData = (document) => {
     favorites,
     tags,
   };
+
+  console.log("Gallery metadata");
+  console.log(metadata);
+
+  return metadata;
 };
