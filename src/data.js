@@ -19,6 +19,7 @@ export const getData = (document) => {
   const description = getInfoElement("Description", document)?.querySelector("td:last-of-type")?.textContent?.trim();
 
   const artists = getArrayText("Artist", document);
+  const circles = getArrayText("Circle", document);
   const magazines = getArrayText("Magazine", document);
   const parodies = getArrayText("Parody", document);
   const publishers = getArrayText("Publisher", document);
@@ -32,6 +33,7 @@ export const getData = (document) => {
     title,
     description,
     artists,
+    circles,
     magazines,
     parodies,
     publishers,
