@@ -55,12 +55,14 @@ const downloadItem = async (item: LibararyItem) => {
 };
 
 const handleLibraryDownload = async () => {
-	const libraryItems: LibararyItem[] = libraryItemElements
-		.map((element) => ({
-			id: Number(element.querySelector('a')!.getAttribute('href')!.split('/').at(-1)),
-			title: element.querySelector('.card-header')!.getAttribute('title')!
-		}))
-		.filter((item) => !downloaded.includes(item.id));
+	let libraryItems: LibararyItem[] = libraryItemElements.map((element) => ({
+		id: Number(element.querySelector('a')!.getAttribute('href')!.split('/').at(-1)),
+		title: element.querySelector('.card-header')!.getAttribute('title')!
+	}));
+
+	if (localStorage.getItem('skip_download') === 'true') {
+		libraryItems = libraryItems.filter((item) => !downloaded.includes(item.id));
+	}
 
 	let progress = 0;
 
