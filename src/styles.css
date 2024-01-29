@@ -1,32 +1,78 @@
 .disabled {
-  pointer-events: none;
+	pointer-events: none;
 }
 
 .animate-spin {
-  animation: spin 1s linear infinite;
+	animation: spin 1s linear infinite;
+}
+
+.download-header {
+	margin: 0;
+	background: 0;
 }
 
 .grey path {
-  fill: rgb(189, 203, 219);
+	fill: rgb(189, 203, 219);
 }
 
 .has-background-primary .grey path {
-  fill: rgb(255, 255, 255);
+	fill: rgb(255, 255, 255);
+}
+
+.download-icon {
+	height: 100%;
+	padding: 0.75rem;
+	border: none;
+	background: none !important;
+	outline: none;
+}
+
+.progress-text {
+	font-size: 0.75rem;
+	font-weight: 600;
+}
+
+.flex {
+	display: flex;
+}
+
+.mb-6 {
+	margin-bottom: 1.5rem;
+}
+
+.ms-auto {
+	margin-inline-start: auto;
+}
+
+.space-between {
+	justify-content: space-between;
+}
+
+.items-center {
+	align-items: center;
 }
 
 .downloaded path {
-  fill: rgb(92 184 92) !important;
+	fill: rgb(92 184 92);
 }
 
 .has-background-primary .downloaded path {
-  fill: rgb(123 229 123) !important;
+	fill: rgb(123 229 123);
+}
+
+.failed path {
+	fill: rgb(236, 91, 86) !important;
+}
+
+.has-background-primary .failed path {
+	fill: rgb(107, 23, 23) !important;
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }

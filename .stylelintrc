@@ -1,0 +1,13 @@
+{
+  "extends": ["stylelint-config-idiomatic-order"],
+  "plugins": ["stylelint-prettier"],
+  "rules": {
+    "prettier/prettier": true,
+    "color-hex-length": "long",
+    "no-empty-source": null,
+    "color-function-notation": null,
+    "property-no-vendor-prefix": null,
+    "selector-not-notation": null,
+    "no-descending-specificity": null
+  }
+}

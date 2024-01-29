@@ -1,0 +1,164 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "polyfills.ts"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+      ],
+      "rules": {
+        "linebreak-style": [
+          "error",
+          "unix"
+        ],
+        "quotes": [
+          "warn",
+          "single"
+        ],
+        "semi": [
+          "warn",
+          "always"
+        ],
+        "curly": "error",
+        "no-multiple-empty-lines": [
+          "warn",
+          {
+            "max": 1
+          }
+        ],
+        "newline-before-return": [
+          "warn"
+        ],
+        "padding-line-between-statements": [
+          "warn",
+          {
+            "blankLine": "always",
+            "prev": "*",
+            "next": "block-like"
+          },
+          {
+            "blankLine": "never",
+            "prev": "import",
+            "next": "import"
+          },
+          {
+            "blankLine": "always",
+            "prev": "import",
+            "next": "class"
+          },
+          {
+            "blankLine": "always",
+            "prev": "import",
+            "next": "export"
+          }
+        ],
+        "lines-between-class-members": [
+          "warn",
+          "always",
+          {
+            "exceptAfterSingleLine": true
+          }
+        ],
+        "@typescript-eslint/interface-name-prefix": [
+          "off"
+        ],
+        "@typescript-eslint/explicit-module-boundary-types": [
+          "off"
+        ],
+        "@typescript-eslint/no-empty-function": [
+          "warn"
+        ],
+        "@typescript-eslint/no-inferrable-types": [
+          "warn"
+        ],
+        "@typescript-eslint/member-ordering": [
+          "warn"
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+          "off"
+        ],
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          {
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/naming-convention": [
+          "warn",
+          {
+            "selector": "variableLike",
+            "format": [
+              "camelCase",
+              "UPPER_CASE"
+            ],
+            "filter": {
+              "regex": "^_",
+              "match": false
+            }
+          },
+          {
+            "selector": "variable",
+            "modifiers": [
+              "destructured"
+            ],
+            "format": null
+          },
+          {
+            "selector": "typeLike",
+            "format": [
+              "PascalCase"
+            ],
+            "filter": {
+              "regex": "^_",
+              "match": false
+            }
+          },
+          {
+            "selector": "property",
+            "format": [
+              "camelCase",
+              "snake_case",
+              "UPPER_CASE"
+            ],
+            "filter": {
+              "regex": "^_",
+              "match": false
+            }
+          },
+          {
+            "selector": [
+              "classProperty",
+              "objectLiteralProperty",
+              "typeProperty",
+              "classMethod",
+              "objectLiteralMethod",
+              "typeMethod",
+              "accessor",
+              "enumMember"
+            ],
+            "format": null,
+            "modifiers": [
+              "requiresQuotes"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "prettier"
+      ],
+      "rules": {}
+    }
+  ]
+}
