@@ -152,6 +152,10 @@ const fetchImage = async (image: Image, writer: ZipWriter<unknown>) => {
 				canvas.toBlob((blob) => {
 					const extension = blob!.type.split('/').at(-1);
 					writer.add(`${image.url_label}.${extension}`, blob!.stream());
+
+					canvas.remove();
+					img.remove();
+
 					resolve();
 				});
 			});
