@@ -1,4 +1,4 @@
-import { ZipWriter } from '@zip.js/zip.js';
+import { AsyncZipDeflate, Zip, strToU8 } from 'fflate';
 import pLimit from 'p-limit';
 import { createWriteStream } from 'streamsaver';
 import type { Gallery } from './data';
@@ -135,7 +135,7 @@ export const decryptData = (encoded: string) => {
 	return result;
 };
 
-const fetchImage = async (image: Image, writer: ZipWriter<unknown>) => {
+const fetchImage = async (image: Image, zip: Zip) => {
 	return new Promise<void>((resolve, reject) => {
 		try {
 			const img = new Image();
@@ -151,12 +151,18 @@ const fetchImage = async (image: Image, writer: ZipWriter<unknown>) => {
 
 				canvas.toBlob((blob) => {
 					const extension = blob!.type.split('/').at(-1);
-					writer.add(`${image.url_label}.${extension}`, blob!.stream());
+					const imageFile = new AsyncZipDeflate(`${image.url_label}.${extension}`);
 
-					canvas.remove();
-					img.remove();
+					zip.add(imageFile);
 
-					resolve();
+					blob!.arrayBuffer().then((buffer) => {
+						imageFile.push(new Uint8Array(buffer), true);
+
+						canvas.remove();
+						img.remove();
+
+						resolve();
+					});
 				});
 			});
 		} catch (e) {
@@ -170,30 +176,53 @@ export const startDownload = async (
 	images: Image[],
 	setProgress: (progress: number) => void
 ) => {
-	const fileStream = createWriteStream(`${generateFilename(metadata)}.cbz`);
+	return new Promise<void>((resolve, reject) => {
+		const fileStream = createWriteStream(`${generateFilename(metadata)}.cbz`);
+		const writer = fileStream.getWriter();
 
-	const zipFileStream = new TransformStream();
-	const zipFileBlobPromise = new Response(zipFileStream.readable).blob();
-	const zipWriter = new ZipWriter(zipFileStream.writable);
+		const zip = new Zip();
 
-	zipWriter.add('info.json', new Blob([JSON.stringify(metadata, null, 2)]).stream());
+		zip.ondata = async (err, chunk, final) => {
+			if (!err) {
+				writer.write(chunk);
 
-	let progress = 0;
+				if (final) {
+					writer.close();
+				}
+			} else {
+				writer.abort();
+				reject(err);
+			}
+		};
 
-	await Promise.all(
-		images.map((image) =>
-			limit(() =>
-				fetchImage(image, zipWriter).then(() => {
-					progress++;
-					setProgress(progress);
-				})
+		const metadataFile = new AsyncZipDeflate('info.json');
+
+		zip.add(metadataFile);
+
+		metadataFile.push(strToU8(JSON.stringify(metadata, null, 2)), true);
+
+		let progress = 0;
+
+		Promise.all(
+			images.map((image) =>
+				limit(() =>
+					fetchImage(image, zip).then(() => {
+						progress++;
+						setProgress(progress);
+					})
+				)
 			)
-		)
-	);
+		).then(() => {
+			zip.end();
+			resolve();
+		});
 
-	await zipWriter.close();
-	const zipFileBlob = await zipFileBlobPromise;
-	await zipFileBlob.stream().pipeTo(fileStream);
+		const beforeUnloadHandler = () => writer.abort();
+
+		window.addEventListener('beforeunload', beforeUnloadHandler);
+
+		writer.closed.then(() => window.removeEventListener('beforeunload', beforeUnloadHandler));
+	});
 };
 
 export const getImages = async (id: number) => {

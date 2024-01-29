@@ -1,7 +1,7 @@
 {
 	"name": "hentainexus-downloader-userscript",
 	"private": true,
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
@@ -32,7 +32,7 @@
 		"vite-plugin-monkey": "^3.5.1"
 	},
 	"dependencies": {
-		"@zip.js/zip.js": "^2.7.33",
+		"fflate": "^0.8.1",
 		"p-limit": "^5.0.0",
 		"streamsaver": "^2.0.6"
 	}
