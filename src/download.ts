@@ -241,7 +241,15 @@ export const getImages = async (id: number) => {
 
 	const encoded = readerScript.match(/initReader\("([^"]*)"/)![1];
 
-	const images: Image[] = JSON.parse(decryptData(encoded));
+	const images: Image[] = JSON.parse(decryptData(encoded)).filter(
+		(image: Image) => image.type === 'image'
+	);
 
-	return images.filter((image) => image.type === 'image');
+	const stripFilter = localStorage.getItem('strip_filter') === 'true';
+
+	if (stripFilter) {
+		return images.map((image) => ({ ...image, image: image.image.replace('?filter=null', '') }));
+	}
+
+	return images;
 };

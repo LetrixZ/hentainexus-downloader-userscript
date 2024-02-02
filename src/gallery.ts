@@ -1,10 +1,11 @@
 import { getData } from './data';
 import { getImages, startDownload } from './download';
 import { downloadIcon, spinnerIcon, xMarkIcon } from './icons';
-import { createDownloadStateStore } from './stores';
+import { createDownloadStateStore, downloaded } from './stores';
 import { sleep } from './utils';
 
 const downloadState = createDownloadStateStore();
+const metadata = getData(document);
 
 const handleDownload = async (event: MouseEvent) => {
 	event.preventDefault();
@@ -12,7 +13,6 @@ const handleDownload = async (event: MouseEvent) => {
 	try {
 		downloadState.starting();
 
-		const metadata = getData(document);
 		const images = await getImages(metadata.id);
 
 		downloadState.processing(0, images.length);
@@ -68,6 +68,8 @@ function addButton() {
 				button.classList.add('disabled');
 				button.querySelector('.button-label')!.innerHTML =
 					`Downloaded (${state.progress}/${state.total})`;
+
+				downloaded.add(metadata.id);
 
 				await sleep(1500);
 

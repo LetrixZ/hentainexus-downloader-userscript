@@ -1,6 +1,3 @@
-import { init as initGallery } from './gallery';
-import { init as initLibrary } from './library';
-import * as Settings from './settings';
 import './styles.css';
 
 if (
@@ -8,9 +5,9 @@ if (
 	location.pathname.startsWith('/page') ||
 	location.pathname.startsWith('/favorites')
 ) {
-	initLibrary();
+	import('./library').then((m) => m.init());
 } else if (location.pathname.startsWith('/view/')) {
-	initGallery();
+	import('./gallery').then((m) => m.init());
 } else if (location.pathname.startsWith('/settings')) {
-	Settings.addSettings();
+	import('./settings').then((m) => m.init());
 }
