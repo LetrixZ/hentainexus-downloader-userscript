@@ -1,7 +1,7 @@
 {
 	"name": "hentainexus-downloader-userscript",
 	"private": true,
-	"version": "1.2.1",
+	"version": "1.2.4",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",

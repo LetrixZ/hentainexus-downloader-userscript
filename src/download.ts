@@ -1,4 +1,4 @@
-import { AsyncZipDeflate, Zip, strToU8 } from 'fflate';
+import { AsyncZipDeflate, Zip, ZipPassThrough, strToU8 } from 'fflate';
 import pLimit from 'p-limit';
 import { createWriteStream } from 'streamsaver';
 import type { Gallery } from './data';
@@ -140,7 +140,7 @@ const fetchImage = async (image: Image, zip: Zip) => {
 
 	const blob = await response.blob();
 	const extension = blob!.type.split('/').at(-1);
-	const imageFile = new AsyncZipDeflate(`${image.url_label}.${extension}`);
+	const imageFile = new ZipPassThrough(`${image.url_label}.${extension}`);
 	zip.add(imageFile);
 
 	await blob!.arrayBuffer().then((buffer) => {
