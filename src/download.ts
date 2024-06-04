@@ -136,38 +136,15 @@ export const decryptData = (encoded: string) => {
 };
 
 const fetchImage = async (image: Image, zip: Zip) => {
-	return new Promise<void>((resolve, reject) => {
-		try {
-			const img = new Image();
-			img.src = image.image;
-			img.crossOrigin = 'anonymous';
-			img.addEventListener('load', () => {
-				const canvas = document.createElement('canvas');
-				const context = canvas.getContext('2d')!;
+	const response = await fetch(image.image);
 
-				canvas.height = img.naturalHeight;
-				canvas.width = img.naturalWidth;
-				context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+	const blob = await response.blob();
+	const extension = blob!.type.split('/').at(-1);
+	const imageFile = new AsyncZipDeflate(`${image.url_label}.${extension}`);
+	zip.add(imageFile);
 
-				canvas.toBlob((blob) => {
-					const extension = blob!.type.split('/').at(-1);
-					const imageFile = new AsyncZipDeflate(`${image.url_label}.${extension}`);
-
-					zip.add(imageFile);
-
-					blob!.arrayBuffer().then((buffer) => {
-						imageFile.push(new Uint8Array(buffer), true);
-
-						canvas.remove();
-						img.remove();
-
-						resolve();
-					});
-				});
-			});
-		} catch (e) {
-			reject(e);
-		}
+	await blob!.arrayBuffer().then((buffer) => {
+		imageFile.push(new Uint8Array(buffer), true);
 	});
 };
 
