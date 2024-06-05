@@ -4,6 +4,9 @@ import monkey from 'vite-plugin-monkey';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+	build: {
+		emptyOutDir: false
+	},
 	plugins: [
 		svelte(),
 		monkey({
