@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         hentainexus-downloader-userscript
 // @namespace    vite-plugin-monkey
-// @version      1.2.5
+// @version      1.2.6
 // @author       monkey
 // @description  Allows users to download a gallery from HentaiNexus with it's metadata
 // @match        https://hentainexus.com/*
@@ -75,9 +75,9 @@ System.register("./__entry.js", [], (function (exports, module) {
         });
       };
       if (location.pathname == "/" || location.pathname.startsWith("/page") || location.pathname.startsWith("/favorites")) {
-        __vitePreload(() => module.import('./library-Njwa4W5r-xs-l33-w.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./library-5BxN000t-lrxnXRvD.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/view/")) {
-        __vitePreload(() => module.import('./gallery-Ba9YIeMh-tM3c8qFb.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./gallery-Yr9kC-rC-U1w2DbXB.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/settings")) {
         __vitePreload(() => module.import('./settings-_03oqxPd-XE-OHLWG.js'), void 0 ).then((m) => m.init());
       }
@@ -86,7 +86,7 @@ System.register("./__entry.js", [], (function (exports, module) {
   };
 }));
 
-System.register("./library-Njwa4W5r-xs-l33-w.js", ['./utils-OBmjrUXK-xG8K7Hbc.js'], (function (exports, module) {
+System.register("./library-5BxN000t-lrxnXRvD.js", ['./utils-ZfOY2rpy-zHLtGGkV.js'], (function (exports, module) {
   'use strict';
   var downloaded, downloadIcon, createLibraryItemDownloadStateManager, getMetadata, getImages, startDownload, sleep, createDownloadStateStore;
   return {
@@ -237,7 +237,7 @@ System.register("./library-Njwa4W5r-xs-l33-w.js", ['./utils-OBmjrUXK-xG8K7Hbc.js
   };
 }));
 
-System.register("./gallery-Ba9YIeMh-tM3c8qFb.js", ['./utils-OBmjrUXK-xG8K7Hbc.js'], (function (exports, module) {
+System.register("./gallery-Yr9kC-rC-U1w2DbXB.js", ['./utils-ZfOY2rpy-zHLtGGkV.js'], (function (exports, module) {
   'use strict';
   var getData, downloadIcon, downloaded, sleep, xMarkIcon, spinnerIcon, createDownloadStateStore, getImages, startDownload;
   return {
@@ -321,7 +321,7 @@ System.register("./gallery-Ba9YIeMh-tM3c8qFb.js", ['./utils-OBmjrUXK-xG8K7Hbc.js
   };
 }));
 
-System.register("./utils-OBmjrUXK-xG8K7Hbc.js", [], (function (exports, module) {
+System.register("./utils-ZfOY2rpy-zHLtGGkV.js", [], (function (exports, module) {
   'use strict';
   return {
     execute: (function () {
@@ -1834,7 +1834,7 @@ System.register("./utils-OBmjrUXK-xG8K7Hbc.js", [], (function (exports, module) 
       };
       const startDownload = exports("s", async (metadata, images, setProgress) => {
         return new Promise((resolve, reject) => {
-          var _a2, _b2, _c, _d, _e;
+          var _a2, _b2, _c, _d;
           const fileStream = StreamSaverExports.createWriteStream(`${generateFilename(metadata)}.cbz`);
           const writer = fileStream.getWriter();
           const zip = new Zip();
@@ -1858,10 +1858,10 @@ System.register("./utils-OBmjrUXK-xG8K7Hbc.js", [], (function (exports, module) 
                   Title: metadata.title,
                   Description: metadata.description,
                   Artist: (_a2 = metadata.artists) == null ? void 0 : _a2.join(", "),
-                  Groups: (_b2 = metadata.circles) == null ? void 0 : _b2.join(", "),
-                  Magazine: (_c = metadata.magazines) == null ? void 0 : _c.join(", "),
-                  Parody: (_d = metadata.parodies) == null ? void 0 : _d.join(", "),
-                  Publisher: (_e = metadata.publishers) == null ? void 0 : _e.join(", "),
+                  Groups: metadata.circles,
+                  Magazine: (_b2 = metadata.magazines) == null ? void 0 : _b2.join(", "),
+                  Parody: (_c = metadata.parodies) == null ? void 0 : _c.join(", "),
+                  Publisher: (_d = metadata.publishers) == null ? void 0 : _d.join(", "),
                   Pages: metadata.pages,
                   Favorites: metadata.favorites,
                   Tags: metadata.tags,

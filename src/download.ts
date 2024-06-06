@@ -183,7 +183,7 @@ export const startDownload = async (
 						Title: metadata.title,
 						Description: metadata.description,
 						Artist: metadata.artists?.join(', '),
-						Groups: metadata.circles?.join(', '),
+						Groups: metadata.circles,
 						Magazine: metadata.magazines?.join(', '),
 						Parody: metadata.parodies?.join(', '),
 						Publisher: metadata.publishers?.join(', '),
