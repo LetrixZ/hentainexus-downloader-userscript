@@ -176,7 +176,28 @@ export const startDownload = async (
 
 		zip.add(metadataFile);
 
-		metadataFile.push(strToU8(JSON.stringify(metadata, null, 2)), true);
+		metadataFile.push(
+			strToU8(
+				JSON.stringify(
+					{
+						Title: metadata.title,
+						Description: metadata.description,
+						Artist: metadata.artists?.join(', '),
+						Groups: metadata.circles?.join(', '),
+						Magazine: metadata.magazines?.join(', '),
+						Parody: metadata.parodies?.join(', '),
+						Publisher: metadata.publishers?.join(', '),
+						Pages: metadata.pages,
+						Favorites: metadata.favorites,
+						Tags: metadata.tags,
+						Source: `https://hentainexus.com/view/${metadata.id}`
+					},
+					null,
+					2
+				)
+			),
+			true
+		);
 
 		let progress = 0;
 

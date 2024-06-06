@@ -75,9 +75,9 @@ System.register("./__entry.js", [], (function (exports, module) {
         });
       };
       if (location.pathname == "/" || location.pathname.startsWith("/page") || location.pathname.startsWith("/favorites")) {
-        __vitePreload(() => module.import('./library-lEMetpAe-brhYQ5Ij.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./library-Njwa4W5r-xs-l33-w.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/view/")) {
-        __vitePreload(() => module.import('./gallery-ViLfLQfs-_FY6ndBk.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./gallery-Ba9YIeMh-tM3c8qFb.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/settings")) {
         __vitePreload(() => module.import('./settings-_03oqxPd-XE-OHLWG.js'), void 0 ).then((m) => m.init());
       }
@@ -86,7 +86,7 @@ System.register("./__entry.js", [], (function (exports, module) {
   };
 }));
 
-System.register("./library-lEMetpAe-brhYQ5Ij.js", ['./utils-YsOI_Z3f-OHnL4je-.js'], (function (exports, module) {
+System.register("./library-Njwa4W5r-xs-l33-w.js", ['./utils-OBmjrUXK-xG8K7Hbc.js'], (function (exports, module) {
   'use strict';
   var downloaded, downloadIcon, createLibraryItemDownloadStateManager, getMetadata, getImages, startDownload, sleep, createDownloadStateStore;
   return {
@@ -237,7 +237,7 @@ System.register("./library-lEMetpAe-brhYQ5Ij.js", ['./utils-YsOI_Z3f-OHnL4je-.js
   };
 }));
 
-System.register("./gallery-ViLfLQfs-_FY6ndBk.js", ['./utils-YsOI_Z3f-OHnL4je-.js'], (function (exports, module) {
+System.register("./gallery-Ba9YIeMh-tM3c8qFb.js", ['./utils-OBmjrUXK-xG8K7Hbc.js'], (function (exports, module) {
   'use strict';
   var getData, downloadIcon, downloaded, sleep, xMarkIcon, spinnerIcon, createDownloadStateStore, getImages, startDownload;
   return {
@@ -254,7 +254,6 @@ System.register("./gallery-ViLfLQfs-_FY6ndBk.js", ['./utils-YsOI_Z3f-OHnL4je-.js
     }],
     execute: (function () {
 
-      console.log("x");
       const downloadState = createDownloadStateStore();
       const metadata = getData(document);
       const handleDownload = async (event) => {
@@ -322,7 +321,7 @@ System.register("./gallery-ViLfLQfs-_FY6ndBk.js", ['./utils-YsOI_Z3f-OHnL4je-.js
   };
 }));
 
-System.register("./utils-YsOI_Z3f-OHnL4je-.js", [], (function (exports, module) {
+System.register("./utils-OBmjrUXK-xG8K7Hbc.js", [], (function (exports, module) {
   'use strict';
   return {
     execute: (function () {
@@ -1835,6 +1834,7 @@ System.register("./utils-YsOI_Z3f-OHnL4je-.js", [], (function (exports, module) 
       };
       const startDownload = exports("s", async (metadata, images, setProgress) => {
         return new Promise((resolve, reject) => {
+          var _a2, _b2, _c, _d, _e;
           const fileStream = StreamSaverExports.createWriteStream(`${generateFilename(metadata)}.cbz`);
           const writer = fileStream.getWriter();
           const zip = new Zip();
@@ -1851,7 +1851,28 @@ System.register("./utils-YsOI_Z3f-OHnL4je-.js", [], (function (exports, module) 
           };
           const metadataFile = new AsyncZipDeflate("info.json");
           zip.add(metadataFile);
-          metadataFile.push(strToU8(JSON.stringify(metadata, null, 2)), true);
+          metadataFile.push(
+            strToU8(
+              JSON.stringify(
+                {
+                  Title: metadata.title,
+                  Description: metadata.description,
+                  Artist: (_a2 = metadata.artists) == null ? void 0 : _a2.join(", "),
+                  Groups: (_b2 = metadata.circles) == null ? void 0 : _b2.join(", "),
+                  Magazine: (_c = metadata.magazines) == null ? void 0 : _c.join(", "),
+                  Parody: (_d = metadata.parodies) == null ? void 0 : _d.join(", "),
+                  Publisher: (_e = metadata.publishers) == null ? void 0 : _e.join(", "),
+                  Pages: metadata.pages,
+                  Favorites: metadata.favorites,
+                  Tags: metadata.tags,
+                  Source: `https://hentainexus.com/view/${metadata.id}`
+                },
+                null,
+                2
+              )
+            ),
+            true
+          );
           let progress = 0;
           Promise.all(
             images.map(
