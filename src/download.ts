@@ -84,7 +84,13 @@ const base64ToBytes = (encoded: string) => {
 };
 
 export const decryptData = (encoded: string) => {
+	const hostname = 'hentainexus.com';
 	const data = base64ToBytes(encoded);
+
+	for (let i = 0; i < hostname.length; i++) {
+		data[i] ^= hostname.charCodeAt(i);
+	}
+
 	const keyStream = data.slice(0, 64).map((byte) => byte & 0xff);
 	const ciphertext = data.slice(64).map((byte) => byte & 0xff);
 	const digest = [...Array(256).keys()];

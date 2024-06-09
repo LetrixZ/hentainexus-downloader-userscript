@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         hentainexus-downloader-userscript
 // @namespace    vite-plugin-monkey
-// @version      1.2.6
+// @version      1.2.7
 // @author       monkey
 // @description  Allows users to download a gallery from HentaiNexus with it's metadata
 // @match        https://hentainexus.com/*
@@ -75,9 +75,9 @@ System.register("./__entry.js", [], (function (exports, module) {
         });
       };
       if (location.pathname == "/" || location.pathname.startsWith("/page") || location.pathname.startsWith("/favorites")) {
-        __vitePreload(() => module.import('./library-5BxN000t-lrxnXRvD.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./library-UhbOFjuf-_vlVeoqP.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/view/")) {
-        __vitePreload(() => module.import('./gallery-Yr9kC-rC-U1w2DbXB.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./gallery-W2TR-mJS-fy3PrtxE.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/settings")) {
         __vitePreload(() => module.import('./settings-_03oqxPd-XE-OHLWG.js'), void 0 ).then((m) => m.init());
       }
@@ -86,7 +86,7 @@ System.register("./__entry.js", [], (function (exports, module) {
   };
 }));
 
-System.register("./library-5BxN000t-lrxnXRvD.js", ['./utils-ZfOY2rpy-zHLtGGkV.js'], (function (exports, module) {
+System.register("./library-UhbOFjuf-_vlVeoqP.js", ['./utils-zPkv4QsP-DNO2x0r9.js'], (function (exports, module) {
   'use strict';
   var downloaded, downloadIcon, createLibraryItemDownloadStateManager, getMetadata, getImages, startDownload, sleep, createDownloadStateStore;
   return {
@@ -237,7 +237,7 @@ System.register("./library-5BxN000t-lrxnXRvD.js", ['./utils-ZfOY2rpy-zHLtGGkV.js
   };
 }));
 
-System.register("./gallery-Yr9kC-rC-U1w2DbXB.js", ['./utils-ZfOY2rpy-zHLtGGkV.js'], (function (exports, module) {
+System.register("./gallery-W2TR-mJS-fy3PrtxE.js", ['./utils-zPkv4QsP-DNO2x0r9.js'], (function (exports, module) {
   'use strict';
   var getData, downloadIcon, downloaded, sleep, xMarkIcon, spinnerIcon, createDownloadStateStore, getImages, startDownload;
   return {
@@ -321,7 +321,7 @@ System.register("./gallery-Yr9kC-rC-U1w2DbXB.js", ['./utils-ZfOY2rpy-zHLtGGkV.js
   };
 }));
 
-System.register("./utils-ZfOY2rpy-zHLtGGkV.js", [], (function (exports, module) {
+System.register("./utils-zPkv4QsP-DNO2x0r9.js", [], (function (exports, module) {
   'use strict';
   return {
     execute: (function () {
@@ -1784,7 +1784,11 @@ System.register("./utils-ZfOY2rpy-zHLtGGkV.js", [], (function (exports, module) 
         return bytes;
       };
       const decryptData = (encoded) => {
+        const hostname = "hentainexus.com";
         const data = base64ToBytes(encoded);
+        for (let i = 0; i < hostname.length; i++) {
+          data[i] ^= hostname.charCodeAt(i);
+        }
         const keyStream = data.slice(0, 64).map((byte) => byte & 255);
         const ciphertext = data.slice(64).map((byte) => byte & 255);
         const digest = [...Array(256).keys()];
