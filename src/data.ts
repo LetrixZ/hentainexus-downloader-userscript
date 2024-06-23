@@ -7,6 +7,7 @@ export type Gallery = {
 	magazines?: string[];
 	parodies?: string[];
 	publishers?: string[];
+	published?: string;
 	pages: number;
 	favorites: number;
 	tags: string[];
@@ -45,6 +46,9 @@ export const getData = (document: Document): Gallery => {
 	const parodies = getArrayText('Parody', document);
 	const publishers = getArrayText('Publisher', document);
 
+	const published = getInfoElement('Published', document)!
+		.querySelector('td:last-of-type')!
+		.textContent!.trim();
 	const pages = parseInt(
 		getInfoElement('Pages', document)!.querySelector('td:last-of-type')!.textContent!.trim()
 	);
@@ -64,6 +68,7 @@ export const getData = (document: Document): Gallery => {
 		magazines,
 		parodies,
 		publishers,
+		published,
 		pages,
 		favorites,
 		tags

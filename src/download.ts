@@ -193,6 +193,7 @@ export const startDownload = async (
 						Magazine: metadata.magazines?.join(', '),
 						Parody: metadata.parodies?.join(', '),
 						Publisher: metadata.publishers?.join(', '),
+						Published: metadata.published && new Date(metadata.published).getTime() / 1000,
 						Pages: metadata.pages,
 						Favorites: metadata.favorites,
 						Tags: metadata.tags,
