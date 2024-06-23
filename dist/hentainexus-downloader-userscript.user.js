@@ -1,9 +1,7 @@
 // ==UserScript==
 // @name         hentainexus-downloader-userscript
 // @namespace    vite-plugin-monkey
-// @version      1.2.7
-// @updateURL    https://github.com/LetrixZ/hentainexus-downloader-userscript/raw/main/dist/hentainexus-downloader-userscript.user.js
-// @downloadURL  https://github.com/LetrixZ/hentainexus-downloader-userscript/raw/main/dist/hentainexus-downloader-userscript.user.js
+// @version      1.2.8
 // @author       monkey
 // @description  Allows users to download a gallery from HentaiNexus with it's metadata
 // @match        https://hentainexus.com/*
@@ -77,9 +75,9 @@ System.register("./__entry.js", [], (function (exports, module) {
         });
       };
       if (location.pathname == "/" || location.pathname.startsWith("/page") || location.pathname.startsWith("/favorites")) {
-        __vitePreload(() => module.import('./library-UhbOFjuf-_vlVeoqP.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./library-Lt9ULrSm-p9a8RR1T.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/view/")) {
-        __vitePreload(() => module.import('./gallery-W2TR-mJS-fy3PrtxE.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./gallery-0Ft7E7Sx-AK5o03Em.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/settings")) {
         __vitePreload(() => module.import('./settings-_03oqxPd-XE-OHLWG.js'), void 0 ).then((m) => m.init());
       }
@@ -88,7 +86,7 @@ System.register("./__entry.js", [], (function (exports, module) {
   };
 }));
 
-System.register("./library-UhbOFjuf-_vlVeoqP.js", ['./utils-zPkv4QsP-DNO2x0r9.js'], (function (exports, module) {
+System.register("./library-Lt9ULrSm-p9a8RR1T.js", ['./utils-ANArBpCk-8vR_WOjB.js'], (function (exports, module) {
   'use strict';
   var downloaded, downloadIcon, createLibraryItemDownloadStateManager, getMetadata, getImages, startDownload, sleep, createDownloadStateStore;
   return {
@@ -239,7 +237,7 @@ System.register("./library-UhbOFjuf-_vlVeoqP.js", ['./utils-zPkv4QsP-DNO2x0r9.js
   };
 }));
 
-System.register("./gallery-W2TR-mJS-fy3PrtxE.js", ['./utils-zPkv4QsP-DNO2x0r9.js'], (function (exports, module) {
+System.register("./gallery-0Ft7E7Sx-AK5o03Em.js", ['./utils-ANArBpCk-8vR_WOjB.js'], (function (exports, module) {
   'use strict';
   var getData, downloadIcon, downloaded, sleep, xMarkIcon, spinnerIcon, createDownloadStateStore, getImages, startDownload;
   return {
@@ -323,7 +321,7 @@ System.register("./gallery-W2TR-mJS-fy3PrtxE.js", ['./utils-zPkv4QsP-DNO2x0r9.js
   };
 }));
 
-System.register("./utils-zPkv4QsP-DNO2x0r9.js", [], (function (exports, module) {
+System.register("./utils-ANArBpCk-8vR_WOjB.js", [], (function (exports, module) {
   'use strict';
   return {
     execute: (function () {
@@ -389,6 +387,7 @@ System.register("./utils-zPkv4QsP-DNO2x0r9.js", [], (function (exports, module) 
         const magazines = getArrayText("Magazine", document2);
         const parodies = getArrayText("Parody", document2);
         const publishers = getArrayText("Publisher", document2);
+        const published = getInfoElement("Published", document2).querySelector("td:last-of-type").textContent.trim();
         const pages = parseInt(
           getInfoElement("Pages", document2).querySelector("td:last-of-type").textContent.trim()
         );
@@ -407,6 +406,7 @@ System.register("./utils-zPkv4QsP-DNO2x0r9.js", [], (function (exports, module) 
           magazines,
           parodies,
           publishers,
+          published,
           pages,
           favorites,
           tags
@@ -1868,6 +1868,7 @@ System.register("./utils-zPkv4QsP-DNO2x0r9.js", [], (function (exports, module) 
                   Magazine: (_b2 = metadata.magazines) == null ? void 0 : _b2.join(", "),
                   Parody: (_c = metadata.parodies) == null ? void 0 : _c.join(", "),
                   Publisher: (_d = metadata.publishers) == null ? void 0 : _d.join(", "),
+                  Published: metadata.published && new Date(metadata.published).getTime() / 1e3,
                   Pages: metadata.pages,
                   Favorites: metadata.favorites,
                   Tags: metadata.tags,
