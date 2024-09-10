@@ -46,9 +46,9 @@ export const getData = (document: Document): Gallery => {
 	const parodies = getArrayText('Parody', document);
 	const publishers = getArrayText('Publisher', document);
 
-	const published = getInfoElement('Published', document)!
-		.querySelector('td:last-of-type')!
-		.textContent!.trim();
+//	const published = getInfoElement('Published', document)!
+//		.querySelector('td:last-of-type')!
+//		.textContent!.trim();
 	const pages = parseInt(
 		getInfoElement('Pages', document)!.querySelector('td:last-of-type')!.textContent!.trim()
 	);
@@ -68,7 +68,7 @@ export const getData = (document: Document): Gallery => {
 		magazines,
 		parodies,
 		publishers,
-		published,
+//		published,
 		pages,
 		favorites,
 		tags
@@ -78,9 +78,9 @@ export const getData = (document: Document): Gallery => {
 export const getMetadata = async (id: number): Promise<Gallery> => {
 	const res = await fetch(`/view/${id}`);
 
-	if (!res.ok) {
-		throw new Error(`[${res.status}] ${res.statusText} - Failed to get metadata for ${id}`);
-	}
+//	if (!res.ok) {
+//		throw new Error(`[${res.status}] ${res.statusText} - Failed to get metadata for ${id}`);
+//	}
 
 	const html = await res.text();
 	const document = new DOMParser().parseFromString(html, 'text/html');
