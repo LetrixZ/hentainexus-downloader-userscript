@@ -8,9 +8,9 @@ export type Gallery = {
 	parodies?: string[];
 	publishers?: string[];
 	published?: string;
-	pages: number;
-	favorites: number;
-	tags: string[];
+	pages?: number;
+	favorites?: number;
+	tags?: string[];
 };
 
 const getInfoElement = (name: string, document: Document) => {
@@ -46,18 +46,37 @@ export const getData = (document: Document): Gallery => {
 	const parodies = getArrayText('Parody', document);
 	const publishers = getArrayText('Publisher', document);
 
-	const published = getInfoElement('Published', document)!
-		.querySelector('td:last-of-type')!
-		.textContent!.trim();
-	const pages = parseInt(
-		getInfoElement('Pages', document)!.querySelector('td:last-of-type')!.textContent!.trim()
-	);
-	const favorites = parseInt(
-		getInfoElement('Favorites', document)!.querySelector('td:last-of-type')!.textContent!.trim()
-	);
-	const tags = Array.from(getInfoElement('Tags', document)!.querySelectorAll('.tag')).map((tag) =>
-		tag.textContent!.trim().split('(')[0].trim()
-	);
+	const published = getInfoElement('Published', document)
+		?.querySelector('td:last-of-type')
+		?.textContent?.trim();
+
+	const pages = (() => {
+		const pagesText = getInfoElement('Pages', document)
+			?.querySelector('td:last-of-type')
+			?.textContent?.trim();
+
+		if (pagesText) {
+			return parseInt(pagesText);
+		}
+	})();
+
+	const favorites = (() => {
+		const favoritesText = getInfoElement('Favorites', document)
+			?.querySelector('td:last-of-type')
+			?.textContent?.trim();
+
+		if (favoritesText) {
+			return parseInt(favoritesText);
+		}
+	})();
+
+	const tags = (() => {
+		const tagsElement = getInfoElement('Tags', document)?.querySelectorAll('.tag');
+
+		if (tagsElement) {
+			return Array.from(tagsElement).map((tag) => tag.textContent!.trim().split('(')[0].trim());
+		}
+	})();
 
 	return {
 		id,

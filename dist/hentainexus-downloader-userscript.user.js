@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         hentainexus-downloader-userscript
 // @namespace    vite-plugin-monkey
-// @version      1.2.8
+// @version      1.2.9
 // @author       monkey
 // @description  Allows users to download a gallery from HentaiNexus with it's metadata
 // @match        https://hentainexus.com/*
@@ -75,9 +75,9 @@ System.register("./__entry.js", [], (function (exports, module) {
         });
       };
       if (location.pathname == "/" || location.pathname.startsWith("/page") || location.pathname.startsWith("/favorites")) {
-        __vitePreload(() => module.import('./library-Lt9ULrSm-p9a8RR1T.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./library-CTxQZpU5-rYlzNwYz.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/view/")) {
-        __vitePreload(() => module.import('./gallery-0Ft7E7Sx-AK5o03Em.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./gallery-r0I-5xdW-yajH0XzI.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/settings")) {
         __vitePreload(() => module.import('./settings-_03oqxPd-XE-OHLWG.js'), void 0 ).then((m) => m.init());
       }
@@ -86,7 +86,7 @@ System.register("./__entry.js", [], (function (exports, module) {
   };
 }));
 
-System.register("./library-Lt9ULrSm-p9a8RR1T.js", ['./utils-ANArBpCk-8vR_WOjB.js'], (function (exports, module) {
+System.register("./library-CTxQZpU5-rYlzNwYz.js", ['./utils-V7dpPPxq-UFoiAUZL.js'], (function (exports, module) {
   'use strict';
   var downloaded, downloadIcon, createLibraryItemDownloadStateManager, getMetadata, getImages, startDownload, sleep, createDownloadStateStore;
   return {
@@ -237,7 +237,7 @@ System.register("./library-Lt9ULrSm-p9a8RR1T.js", ['./utils-ANArBpCk-8vR_WOjB.js
   };
 }));
 
-System.register("./gallery-0Ft7E7Sx-AK5o03Em.js", ['./utils-ANArBpCk-8vR_WOjB.js'], (function (exports, module) {
+System.register("./gallery-r0I-5xdW-yajH0XzI.js", ['./utils-V7dpPPxq-UFoiAUZL.js'], (function (exports, module) {
   'use strict';
   var getData, downloadIcon, downloaded, sleep, xMarkIcon, spinnerIcon, createDownloadStateStore, getImages, startDownload;
   return {
@@ -321,7 +321,7 @@ System.register("./gallery-0Ft7E7Sx-AK5o03Em.js", ['./utils-ANArBpCk-8vR_WOjB.js
   };
 }));
 
-System.register("./utils-ANArBpCk-8vR_WOjB.js", [], (function (exports, module) {
+System.register("./utils-V7dpPPxq-UFoiAUZL.js", [], (function (exports, module) {
   'use strict';
   return {
     execute: (function () {
@@ -376,7 +376,7 @@ System.register("./utils-ANArBpCk-8vR_WOjB.js", [], (function (exports, module) 
         );
       };
       const getData = exports("h", (document2) => {
-        var _a2, _b2, _c;
+        var _a2, _b2, _c, _d, _e, _f;
         const id = Number(
           document2.querySelector('a[href^="/read/"]').getAttribute("href").split("/").at(-1)
         );
@@ -387,16 +387,28 @@ System.register("./utils-ANArBpCk-8vR_WOjB.js", [], (function (exports, module) 
         const magazines = getArrayText("Magazine", document2);
         const parodies = getArrayText("Parody", document2);
         const publishers = getArrayText("Publisher", document2);
-        const published = getInfoElement("Published", document2).querySelector("td:last-of-type").textContent.trim();
-        const pages = parseInt(
-          getInfoElement("Pages", document2).querySelector("td:last-of-type").textContent.trim()
-        );
-        const favorites = parseInt(
-          getInfoElement("Favorites", document2).querySelector("td:last-of-type").textContent.trim()
-        );
-        const tags = Array.from(getInfoElement("Tags", document2).querySelectorAll(".tag")).map(
-          (tag) => tag.textContent.trim().split("(")[0].trim()
-        );
+        const published = (_f = (_e = (_d = getInfoElement("Published", document2)) == null ? void 0 : _d.querySelector("td:last-of-type")) == null ? void 0 : _e.textContent) == null ? void 0 : _f.trim();
+        const pages = (() => {
+          var _a3, _b3, _c2;
+          const pagesText = (_c2 = (_b3 = (_a3 = getInfoElement("Pages", document2)) == null ? void 0 : _a3.querySelector("td:last-of-type")) == null ? void 0 : _b3.textContent) == null ? void 0 : _c2.trim();
+          if (pagesText) {
+            return parseInt(pagesText);
+          }
+        })();
+        const favorites = (() => {
+          var _a3, _b3, _c2;
+          const favoritesText = (_c2 = (_b3 = (_a3 = getInfoElement("Favorites", document2)) == null ? void 0 : _a3.querySelector("td:last-of-type")) == null ? void 0 : _b3.textContent) == null ? void 0 : _c2.trim();
+          if (favoritesText) {
+            return parseInt(favoritesText);
+          }
+        })();
+        const tags = (() => {
+          var _a3;
+          const tagsElement = (_a3 = getInfoElement("Tags", document2)) == null ? void 0 : _a3.querySelectorAll(".tag");
+          if (tagsElement) {
+            return Array.from(tagsElement).map((tag) => tag.textContent.trim().split("(")[0].trim());
+          }
+        })();
         return {
           id,
           title,
