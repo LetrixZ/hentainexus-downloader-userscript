@@ -108,9 +108,8 @@ const addHeaderButton = () => {
 		container.classList.add('container', 'flex', 'mb-6');
 		container.append(button);
 
-		const itemsContainer = document.querySelector('.container')!;
-		const section = itemsContainer.parentElement!;
-		section.insertBefore(container, itemsContainer);
+		const section = document.querySelector('section.section:not(.is-hidden)')!;
+		section.prepend(container);
 	}
 };
 

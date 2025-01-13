@@ -75,7 +75,7 @@ System.register("./__entry.js", [], (function (exports, module) {
         });
       };
       if (location.pathname == "/" || location.pathname.startsWith("/page") || location.pathname.startsWith("/favorites")) {
-        __vitePreload(() => module.import('./library-CTxQZpU5-rYlzNwYz.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./library-1aCGqxsM-Gxu7OAAU.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/view/")) {
         __vitePreload(() => module.import('./gallery-r0I-5xdW-yajH0XzI.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/settings")) {
@@ -86,7 +86,7 @@ System.register("./__entry.js", [], (function (exports, module) {
   };
 }));
 
-System.register("./library-CTxQZpU5-rYlzNwYz.js", ['./utils-V7dpPPxq-UFoiAUZL.js'], (function (exports, module) {
+System.register("./library-1aCGqxsM-Gxu7OAAU.js", ['./utils-V7dpPPxq-UFoiAUZL.js'], (function (exports, module) {
   'use strict';
   var downloaded, downloadIcon, createLibraryItemDownloadStateManager, getMetadata, getImages, startDownload, sleep, createDownloadStateStore;
   return {
@@ -175,9 +175,8 @@ System.register("./library-CTxQZpU5-rYlzNwYz.js", ['./utils-V7dpPPxq-UFoiAUZL.js
           const container = document.createElement("div");
           container.classList.add("container", "flex", "mb-6");
           container.append(button);
-          const itemsContainer = document.querySelector(".container");
-          const section = itemsContainer.parentElement;
-          section.insertBefore(container, itemsContainer);
+          const section = document.querySelector("section.section:not(.is-hidden)");
+          section.prepend(container);
         }
       };
       const addItemsButton = () => {
