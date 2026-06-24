@@ -13,7 +13,11 @@ export default defineConfig({
 			entry: 'src/main.ts',
 			userscript: {
 				match: ['https://hentainexus.com/*'],
-				description: "Allows users to download a gallery from HentaiNexus with it's metadata"
+				description: "Allows users to download a gallery from HentaiNexus with it's metadata",
+				updateURL:
+					'https://github.com/LetrixZ/hentainexus-downloader-userscript/raw/main/dist/hentainexus-downloader-userscript.user.js',
+				downloadURL:
+					'https://github.com/LetrixZ/hentainexus-downloader-userscript/raw/main/dist/hentainexus-downloader-userscript.user.js'
 			}
 		})
 	]

@@ -4,6 +4,8 @@
 // @version      1.3.1
 // @author       monkey
 // @description  Allows users to download a gallery from HentaiNexus with it's metadata
+// @downloadURL  https://github.com/LetrixZ/hentainexus-downloader-userscript/raw/main/dist/hentainexus-downloader-userscript.user.js
+// @updateURL    https://github.com/LetrixZ/hentainexus-downloader-userscript/raw/main/dist/hentainexus-downloader-userscript.user.js
 // @match        https://hentainexus.com/*
 // @require      https://cdn.jsdelivr.net/npm/systemjs@6.14.3/dist/system.min.js
 // @require      https://cdn.jsdelivr.net/npm/systemjs@6.14.3/dist/extras/named-register.min.js
