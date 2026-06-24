@@ -4,7 +4,7 @@ import { createWriteStream } from 'streamsaver';
 import type { Gallery } from './data';
 
 type Image = {
-	image: string;
+	image_fallback: string;
 	label: string;
 	url_label: string;
 	type: 'image' | '';
@@ -142,7 +142,7 @@ export const decryptData = (encoded: string) => {
 };
 
 const fetchImage = async (image: Image, zip: Zip) => {
-	const response = await fetch(image.image);
+	const response = await fetch(image.image_fallback);
 
 	const blob = await response.blob();
 	const extension = blob!.type.split('/').at(-1);
@@ -253,7 +253,7 @@ export const getImages = async (id: number) => {
 	const stripFilter = localStorage.getItem('strip_filter') === 'true';
 
 	if (stripFilter) {
-		return images.map((image) => ({ ...image, image: image.image.replace('?filter=null', '') }));
+		return images.map((image) => ({ ...image, image: image.image_fallback.replace('?filter=null', '') }));
 	}
 
 	return images;

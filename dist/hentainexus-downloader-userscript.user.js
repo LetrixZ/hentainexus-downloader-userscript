@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         hentainexus-downloader-userscript
 // @namespace    vite-plugin-monkey
-// @version      1.3.0
+// @version      1.3.1
 // @author       monkey
 // @description  Allows users to download a gallery from HentaiNexus with it's metadata
 // @match        https://hentainexus.com/*
@@ -75,9 +75,9 @@ System.register("./__entry.js", [], (function (exports, module) {
         });
       };
       if (location.pathname == "/" || location.pathname.startsWith("/page") || location.pathname.startsWith("/favorites")) {
-        __vitePreload(() => module.import('./library-1aCGqxsM-Gxu7OAAU.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./library-Mt9nWhOw-zIWo-DSg.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/view/")) {
-        __vitePreload(() => module.import('./gallery-r0I-5xdW-yajH0XzI.js'), void 0 ).then((m) => m.init());
+        __vitePreload(() => module.import('./gallery-ESqoNMhv-Zq_KgQJB.js'), void 0 ).then((m) => m.init());
       } else if (location.pathname.startsWith("/settings")) {
         __vitePreload(() => module.import('./settings-_03oqxPd-XE-OHLWG.js'), void 0 ).then((m) => m.init());
       }
@@ -86,7 +86,7 @@ System.register("./__entry.js", [], (function (exports, module) {
   };
 }));
 
-System.register("./library-1aCGqxsM-Gxu7OAAU.js", ['./utils-V7dpPPxq-UFoiAUZL.js'], (function (exports, module) {
+System.register("./library-Mt9nWhOw-zIWo-DSg.js", ['./utils-2_Q28Rc0-GHC0jVV4.js'], (function (exports, module) {
   'use strict';
   var downloaded, downloadIcon, createLibraryItemDownloadStateManager, getMetadata, getImages, startDownload, sleep, createDownloadStateStore;
   return {
@@ -236,7 +236,7 @@ System.register("./library-1aCGqxsM-Gxu7OAAU.js", ['./utils-V7dpPPxq-UFoiAUZL.js
   };
 }));
 
-System.register("./gallery-r0I-5xdW-yajH0XzI.js", ['./utils-V7dpPPxq-UFoiAUZL.js'], (function (exports, module) {
+System.register("./gallery-ESqoNMhv-Zq_KgQJB.js", ['./utils-2_Q28Rc0-GHC0jVV4.js'], (function (exports, module) {
   'use strict';
   var getData, downloadIcon, downloaded, sleep, xMarkIcon, spinnerIcon, createDownloadStateStore, getImages, startDownload;
   return {
@@ -320,7 +320,7 @@ System.register("./gallery-r0I-5xdW-yajH0XzI.js", ['./utils-V7dpPPxq-UFoiAUZL.js
   };
 }));
 
-System.register("./utils-V7dpPPxq-UFoiAUZL.js", [], (function (exports, module) {
+System.register("./utils-2_Q28Rc0-GHC0jVV4.js", [], (function (exports, module) {
   'use strict';
   return {
     execute: (function () {
@@ -1840,7 +1840,7 @@ System.register("./utils-V7dpPPxq-UFoiAUZL.js", [], (function (exports, module) 
         return result;
       };
       const fetchImage = async (image, zip) => {
-        const response = await fetch(image.image);
+        const response = await fetch(image.image_fallback);
         const blob = await response.blob();
         const extension = blob.type.split("/").at(-1);
         const imageFile = new ZipPassThrough(`${image.url_label}.${extension}`);
@@ -1926,7 +1926,7 @@ System.register("./utils-V7dpPPxq-UFoiAUZL.js", [], (function (exports, module) 
         );
         const stripFilter = localStorage.getItem("strip_filter") === "true";
         if (stripFilter) {
-          return images.map((image) => ({ ...image, image: image.image.replace("?filter=null", "") }));
+          return images.map((image) => ({ ...image, image: image.image_fallback.replace("?filter=null", "") }));
         }
         return images;
       });
